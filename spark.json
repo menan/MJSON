@@ -1,0 +1,7 @@
+{
+    "name": "MJSON",
+    "version": "0.0.1",
+    "author": "Menan Vadivel <menan.vadivel@gmail.com>",
+    "license": "Choose a license",
+    "description": "My SUPER lightweight JSON parser for Spark Core"
+}
