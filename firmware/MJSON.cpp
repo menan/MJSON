@@ -15,33 +15,60 @@ void MJSON::setJSON(String json) {
 }
 
 char * MJSON::readValue(String key){
-	char * source = (char *) jsonData.c_str();  
-	char * dest = (char *) key.c_str();
-	char * found = strstr(source, dest);
+	char *source = (char *) jsonData.c_str();  
+	char *dest = (char *) key.c_str();
+	char *found = strstr(source, dest);
 
-	char *endToken = strstr(found,",");
 	char *midToken = strstr(found,":");
 
+
+
 	char obj[200];
-	int index = 0;
+	// int index = 0;
 	int indexEnd = 0;
 	int indexMid = 0;
-	if (found != NULL && endToken != NULL && midToken != NULL)
+	char *endToken;
+	if (found != NULL && midToken != NULL)
 	{
-		index = found - source;
-		indexMid = midToken - source + 1;
-		indexEnd = endToken - source + 1;
 
-		if (source[indexMid] == '"' && source[indexEnd] == '"')
+		indexMid = midToken - source + 1;
+
+		// Serial.print("midToken: ");
+		// Serial.println(midToken);
+
+		if (source[indexMid] == '"')
 		{
-			indexMid++;
-			indexEnd--;
+			endToken = strstr(midToken + 2,"\"");
+
+		}
+		else{
+			if (strstr(found,"}") < strstr(found,","))
+			{
+				endToken = strstr(found,"}");
+			}
+			else{
+
+				endToken = strstr(found,",");
+			}
 		}
 
-		int length = (indexEnd - indexMid);
+		if (endToken != NULL){
 
-		strlcpy(obj, &source[indexMid], length);
-		Serial.println(obj);
+			indexEnd = endToken - source + 1;
+
+			if (source[indexMid] == '"')
+			{
+				indexMid++;
+			}
+
+			int length = (indexEnd - indexMid);
+
+			strlcpy(obj, &source[indexMid], length);
+			Serial.print(key + ": ");
+			Serial.println(obj);
+		}
+
+
 
 	}
 	return obj;
