@@ -1,4 +1,4 @@
-#include "MJSON/MJSON.h"
+#include "MJSON.h"
 
 MJSON *parser;
 

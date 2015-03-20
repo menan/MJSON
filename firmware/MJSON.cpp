@@ -17,7 +17,7 @@ void MJSON::setJSON(String json) {
 char * MJSON::readValue(String key){
 	char * source = (char *) jsonData.c_str();  
 	char * dest = (char *) key.c_str();
-	char * found = strstr( source, dest );
+	char * found = strstr(source, dest);
 
 	char *endToken = strstr(found,",");
 	char *midToken = strstr(found,":");
@@ -31,6 +31,12 @@ char * MJSON::readValue(String key){
 		index = found - source;
 		indexMid = midToken - source + 1;
 		indexEnd = endToken - source + 1;
+
+		if (source[indexMid] == '"' && source[indexEnd] == '"')
+		{
+			indexMid++;
+			indexEnd--;
+		}
 
 		int length = (indexEnd - indexMid);
 
